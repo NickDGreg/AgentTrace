@@ -1,0 +1,7 @@
+tasks:
+  - id: simple-static-btc
+    site: simple_static
+    compose_file: sites/simple_static/compose.yaml
+    start_url: http://localhost:18080/
+    expected_artifacts:
+      BTC: bc1qagenttrace0static0stage000000000000000000

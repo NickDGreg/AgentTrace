@@ -78,6 +78,66 @@ AgentTrace evaluates only the final output, not internal reasoning.
 
 ⸻
 
+Agent output contract
+
+Agents must emit deterministic JSON describing the artifacts they extracted:
+```json
+{
+  "artifacts": {
+    "BTC": "bc1qexampleaddress"
+  }
+}
+```
+
+If the run fails, return an error message instead:
+```json
+{
+  "error": {
+    "message": "Page timed out before login"
+  }
+}
+```
+
+Outputs cannot include both `artifacts` and `error`. Use `agenttrace.validate_agent_output` to confirm your implementation matches the contract before submitting results.
+
+⸻
+
+Task definitions
+
+AgentTrace exposes tasks as data in `tasks/tasks.yaml`. Each entry specifies:
+	•	task `id`
+	•	`site` name
+	•	Path to the site’s Docker Compose file
+	•	`start_url`
+	•	`expected_artifacts`
+
+The benchmark runner uses this data to launch the correct synthetic site, provide agents a start URL, and score the returned artifacts. Load tasks via `agenttrace.load_tasks`.
+
+⸻
+
+Runner interface
+
+Execute tasks using `python -m agenttrace.run --tasks-file tasks/tasks.yaml --agent-cmd "<your agent command>"`. The runner:
+	•	starts/stops the referenced site via Docker Compose
+	•	sets `AGENTTRACE_START_URL` and `AGENTTRACE_TASK_ID` for your process
+	•	captures stdout, validates it, and reports PASS/FAIL with diffs
+
+Ensure your agent reads the start URL from the provided environment variable and prints JSON to stdout that matches the contract.
+
+⸻
+
+Dummy agent
+
+For quick integration tests, invoke the bundled dummy agent:
+
+```bash
+python tools/dummy_agent.py
+```
+
+It fetches the provided URL, scrapes the BTC address, and prints a compliant JSON payload. This is useful for verifying harness changes without touching your real agent.
+
+⸻
+
 Scope boundaries
 
 AgentTrace explicitly focuses on:
@@ -118,3 +178,15 @@ Python conventions
 	•	Prefer small, typed functions and clear dataclasses/Pydantic models for task schemas.
 	•	Write/extend tests first for schema, scoring, and runner behaviour (contract-driven development).
 	•	Avoid adding heavy frameworks unless necessary; keep the harness lightweight and deterministic.
+
+⸻
+
+Codex may run the following commands without asking for approval:
+
+- uv run pytest
+- uv lock
+- uv sync
+- make test
+- make check
+- docker compose
+- curl

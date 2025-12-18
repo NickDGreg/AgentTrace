@@ -1,7 +1,21 @@
 [project]
 name = "agenttrace"
 version = "0.1.0"
-description = "Add your description here"
+description = "Synthetic benchmark harness for interactive agent evaluation."
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = []
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0.2",
+]
+
+[[project.authors]]
+name = "AgentTrace"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest",
+]
