@@ -38,5 +38,11 @@ Contract tests that specify behaviour for:
 	•	runner I/O (external agent invocation + output parsing)
 	•	site determinism/health (boot + seeded truth exists)
 
+	•	agenttrace/ (Python package)
+Benchmark harness code:
+	•	task loading + validation
+	•	runner (spin up site, invoke an external agent/crawler, collect output)
+	•	scoring (compare output to ground truth; emit clear diffs)
+
 	•	scripts/ (optional)
 Convenience commands to run common flows locally (bring up site(s), seed, run smoke suite).
