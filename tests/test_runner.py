@@ -10,7 +10,7 @@ from agenttrace.run import (
     SITE_READY_TIMEOUT_SECONDS,
     RunnerError,
     _run_task,
-    _select_task,
+    _select_tasks,
     _wait_for_site,
 )
 
@@ -29,18 +29,18 @@ def sample_task(tmp_path: Path) -> Task:
 
 
 def test_select_task_single(sample_task: Task):
-    task = _select_task([sample_task], None)
-    assert task.id == "example"
+    tasks = _select_tasks([sample_task], None, None)
+    assert [task.id for task in tasks] == ["example"]
 
 
 def test_select_task_missing():
     with pytest.raises(ValueError):
-        _select_task([], None)
+        _select_tasks([], None, None)
 
 
 def test_select_task_by_id(sample_task: Task):
-    task = _select_task([sample_task], "example")
-    assert task is sample_task
+    tasks = _select_tasks([sample_task], "example", None)
+    assert tasks == [sample_task]
 
 
 def test_run_task_success(sample_task: Task):
@@ -49,11 +49,12 @@ def test_run_task_success(sample_task: Task):
     )
     with mock.patch("agenttrace.run._wait_for_site") as wait_for_site:
         with mock.patch("subprocess.run", return_value=completed):
-            exit_code = _run_task(sample_task, "cmd", timeout=5)
+            status, result = _run_task(sample_task, "cmd", timeout=5)
     wait_for_site.assert_called_once_with(
         sample_task.start_url, timeout=min(5, SITE_READY_TIMEOUT_SECONDS)
     )
-    assert exit_code == 0
+    assert status == "PASS"
+    assert result["passed"] is True
 
 
 def test_run_task_validation_error(sample_task: Task):
@@ -62,11 +63,12 @@ def test_run_task_validation_error(sample_task: Task):
     )
     with mock.patch("agenttrace.run._wait_for_site") as wait_for_site:
         with mock.patch("subprocess.run", return_value=completed):
-            with pytest.raises(RunnerError):
-                _run_task(sample_task, "cmd", timeout=5)
+            status, result = _run_task(sample_task, "cmd", timeout=5)
     wait_for_site.assert_called_once_with(
         sample_task.start_url, timeout=min(5, SITE_READY_TIMEOUT_SECONDS)
     )
+    assert status == "ERROR"
+    assert "invalid agent output" in str(result.get("error"))
 
 
 def test_wait_for_site_success():

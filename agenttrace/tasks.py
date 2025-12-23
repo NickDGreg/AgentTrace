@@ -29,9 +29,35 @@ def load_tasks(path: str | Path) -> list[Task]:
         raise ValueError("'tasks' must be a non-empty list.")
 
     tasks: list[Task] = []
-    for entry in raw_tasks:
-        tasks.append(_parse_task(entry))
+    seen_ids: set[str] = set()
+    for index, entry in enumerate(raw_tasks, start=1):
+        try:
+            task = _parse_task(entry)
+        except ValueError as exc:
+            raise ValueError(f"task #{index} is invalid: {exc}") from exc
+        if task.id in seen_ids:
+            raise ValueError(f"duplicate task id found: {task.id}")
+        seen_ids.add(task.id)
+        tasks.append(task)
     return tasks
+
+
+def load_suite_ids(path: str | Path) -> list[str]:
+    """Load suite task ids from YAML."""
+    data = _read_yaml(Path(path))
+    if not isinstance(data, dict):
+        raise ValueError("suite file must define a mapping with a 'tasks' key.")
+
+    raw_ids = data.get("tasks")
+    if not isinstance(raw_ids, list) or not raw_ids:
+        raise ValueError("'tasks' must be a non-empty list of task ids.")
+
+    task_ids: list[str] = []
+    for index, value in enumerate(raw_ids, start=1):
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(f"suite task id at index {index} must be a non-empty string.")
+        task_ids.append(value)
+    return task_ids
 
 
 def _read_yaml(path: Path) -> Any:

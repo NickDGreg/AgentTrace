@@ -9,3 +9,12 @@
 - **Step 0.6**: Added the runner CLI (`python -m agenttrace.run`) that orchestrates Docker, agent execution, validation, and scoring.
 - **Step 0.7**: Built `tools/dummy_agent.py` plus tests, enabling smoke runs without a real crawler.
 - **Step 0.8**: Ensured contract-focused pytest suite (validator, tasks, scorer, runner helpers, dummy agent) runs quickly via `uv run pytest`.
+
+## Stage 1
+- **Step 1.1**: Hardened task loading for multi-task files (duplicate-id validation + clearer errors) and added multi-task fixture data.
+- **Step 1.2**: Added suite data files (`tasks/suites/*.yaml`) and CLI `--suite` selection; documented smoke usage.
+- **Step 1.3**: Updated the runner to execute multiple tasks in a single invocation, grouped by compose file, with per-task status and summary counts.
+- **Step 1.4**: Added results JSON output (`--results-file`) with metadata, per-task results, timings, and summary counts.
+- **Step 1.5**: Standardized stdout task lines (`PASS|FAIL|ERROR <task_id>`) with a final totals line.
+- **Step 1.6**: Added tests for multi-task loading, duplicate-id failures, and suite selection/missing suite errors.
+- **Step 1.7**: Added a runner contract test that validates results JSON output without Docker.

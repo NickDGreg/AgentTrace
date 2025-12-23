@@ -11,7 +11,7 @@ AgentTrace provides:
 	•	optional later: BrowserGym compatibility layer (not required for V1)
 
 ⸻
-
+COMPLETE
 Stage 0 — Minimal end-to-end scaffold (setup as quickly and simply as possible)
 
 Objective: have something runnable to test the benchmark setup even if the “site” is trivial.
@@ -32,7 +32,7 @@ Notes:
 	•	focus is scaffolding: “site runs + task spec + run + score”
 
 ⸻
-
+COMPLETE
 Stage 1 — Make the scaffold benchmark-shaped (still simple)
 
 Objective: move from “one-off test” to “benchmark harness” without increasing site complexity much.

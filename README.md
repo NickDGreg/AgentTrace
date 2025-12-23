@@ -81,7 +81,7 @@ docker compose -f sites/simple_static/compose.yaml up --build
 The page becomes available at <http://localhost:18080/>. Tear it down with `docker compose -f sites/simple_static/compose.yaml down`.
 
 ### Task definitions
-Stage 0 ships with a single task stored in `tasks/tasks.yaml`. Tasks are declarative and include:
+Stage 0 ships with tasks stored in `tasks/tasks.yaml`. Tasks are declarative and include:
 - `id`: unique identifier
 - `site`: logical site name
 - `compose_file`: path to the Docker Compose file for the site
@@ -89,6 +89,18 @@ Stage 0 ships with a single task stored in `tasks/tasks.yaml`. Tasks are declara
 - `expected_artifacts`: mapping of artifact keys to ground truth values
 
 Use `agenttrace.load_tasks("tasks/tasks.yaml")` to load them into `Task` objects.
+
+### Task suites (smoke)
+Suites are data files under `tasks/suites/`. The smoke suite lives at `tasks/suites/smoke.yaml` and lists task ids to run as a quick subset.
+
+Run the smoke suite with:
+
+```bash
+uv run python -m agenttrace.run \
+  --tasks-file tasks/tasks.yaml \
+  --suite smoke \
+  --agent-cmd "python tools/dummy_agent.py"
+```
 
 ### Scoring contract
 `agenttrace.score_artifacts(expected, actual)` compares the expected artifacts from a task with an agent’s reported output. It returns `(passed: bool, diff: str)` and highlights missing keys, mismatched values, and unexpected extras.
@@ -107,6 +119,17 @@ The runner will:
 - pass `AGENTTRACE_START_URL` and `AGENTTRACE_TASK_ID` environment variables to the agent command
 - capture the agent’s stdout, validate it via the contract, score it, and print PASS/FAIL
 - tear the site down after execution
+
+The runner also writes a machine-readable results JSON file. By default it goes to `results/latest.json`, or you can set a custom path:
+
+```bash
+uv run python -m agenttrace.run \
+  --tasks-file tasks/tasks.yaml \
+  --agent-cmd "python tools/dummy_agent.py" \
+  --results-file results/smoke.json
+```
+
+Results include per-task status, artifacts, diffs/errors, timings, and summary counts.
 
 ### Dummy agent
 For smoke tests without a full crawler, use `tools/dummy_agent.py`:

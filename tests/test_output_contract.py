@@ -54,3 +54,32 @@ tasks:
     assert isinstance(task, Task)
     assert task.id == "example"
     assert task.compose_file == temp_compose.resolve()
+
+
+def test_load_tasks_multiple_entries(tmp_path: Path):
+    temp_compose = tmp_path / "compose.yaml"
+    temp_compose.write_text("services: {}", encoding="utf-8")
+
+    task_yaml = tmp_path / "tasks.yaml"
+    task_yaml.write_text(
+        f"""
+tasks:
+  - id: example-a
+    site: demo
+    compose_file: {temp_compose}
+    start_url: http://localhost
+    expected_artifacts:
+      BTC: "123"
+  - id: example-b
+    site: demo
+    compose_file: {temp_compose}
+    start_url: http://localhost
+    expected_artifacts:
+      BTC: "456"
+""",
+        encoding="utf-8",
+    )
+
+    tasks = load_tasks(task_yaml)
+
+    assert [task.id for task in tasks] == ["example-a", "example-b"]
