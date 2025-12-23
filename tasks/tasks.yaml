@@ -11,3 +11,15 @@ tasks:
     start_url: http://localhost:18080/
     expected_artifacts:
       BTC: bc1qagenttrace0static0stage000000000000000000
+  - id: login-deposit-basic
+    site: login_deposit_basic
+    compose_file: sites/login_deposit_basic/compose.yaml
+    start_url: http://localhost:18081/login
+    expected_artifacts:
+      BTC: bc1qagenttrace0login0deposit0basic0000000000000000
+      ETH: 0xagenttrace0login0deposit0basic0000000000000000000
+    credentials:
+      email: user1@example.com
+      password: pass1
+    ground_truth_db: sites/login_deposit_basic/data/site.db
+    ground_truth_user_email: user1@example.com

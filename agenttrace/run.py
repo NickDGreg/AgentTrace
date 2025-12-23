@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Iterable
 
 from . import Task, load_tasks, load_suite_ids, score_artifacts, validate_agent_output
+from .ground_truth import load_expected_artifacts_from_db
 
 SITE_READY_TIMEOUT_SECONDS = 30
 SITE_READY_POLL_INTERVAL_SECONDS = 0.5
@@ -137,6 +138,11 @@ def _run_task(task: Task, agent_cmd: str, timeout: int) -> tuple[str, dict[str, 
     env = os.environ.copy()
     env["AGENTTRACE_START_URL"] = task.start_url
     env["AGENTTRACE_TASK_ID"] = task.id
+    if task.credentials:
+        if "email" in task.credentials:
+            env["AGENTTRACE_EMAIL"] = task.credentials["email"]
+        if "password" in task.credentials:
+            env["AGENTTRACE_PASSWORD"] = task.credentials["password"]
 
     try:
         completed = subprocess.run(
@@ -183,7 +189,18 @@ def _run_task(task: Task, agent_cmd: str, timeout: int) -> tuple[str, dict[str, 
             start_iso,
         )
 
-    passed, diff = score_artifacts(task.expected_artifacts, artifacts)
+    try:
+        expected = _get_expected_artifacts(task)
+    except ValueError as exc:
+        return "ERROR", _error_result(
+            task.id,
+            f"failed to load ground truth: {exc}",
+            start_time,
+            start_monotonic,
+            start_iso,
+        )
+
+    passed, diff = score_artifacts(expected, artifacts)
     status = "PASS" if passed else "FAIL"
     return status, _finalize_result(
         task.id,
@@ -271,6 +288,14 @@ def _print_task_status(status: str, task_id: str, detail: str) -> None:
         print(f"FAIL {task_id}: {detail}")
     else:
         print(f"ERROR {task_id}: {detail}")
+
+
+def _get_expected_artifacts(task: Task) -> dict[str, str]:
+    if task.ground_truth_db and task.ground_truth_user_email:
+        return load_expected_artifacts_from_db(
+            task.ground_truth_db, task.ground_truth_user_email
+        )
+    return dict(task.expected_artifacts)
 
 
 def _build_metadata(

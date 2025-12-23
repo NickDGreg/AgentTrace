@@ -16,6 +16,9 @@ class Task:
     compose_file: Path
     start_url: str
     expected_artifacts: dict[str, str]
+    credentials: dict[str, str] | None = None
+    ground_truth_db: Path | None = None
+    ground_truth_user_email: str | None = None
 
 
 def load_tasks(path: str | Path) -> list[Task]:
@@ -92,10 +95,42 @@ def _parse_task(entry: Any) -> Task:
         if not isinstance(key, str) or not isinstance(value, str):
             raise ValueError("expected artifact keys and values must be strings.")
 
+    credentials = None
+    if "credentials" in entry:
+        raw_credentials = entry["credentials"]
+        if raw_credentials is None:
+            credentials = None
+        elif not isinstance(raw_credentials, dict):
+            raise ValueError("credentials must be a mapping or null.")
+        else:
+            for key, value in raw_credentials.items():
+                if not isinstance(key, str) or not isinstance(value, str):
+                    raise ValueError("credentials keys and values must be strings.")
+            credentials = dict(raw_credentials)
+
+    ground_truth_db = None
+    if "ground_truth_db" in entry:
+        raw_db = entry["ground_truth_db"]
+        if raw_db is not None and not isinstance(raw_db, str):
+            raise ValueError("ground_truth_db must be a string path or null.")
+        if raw_db:
+            ground_truth_db = Path(raw_db).resolve()
+
+    ground_truth_user_email = None
+    if "ground_truth_user_email" in entry:
+        raw_email = entry["ground_truth_user_email"]
+        if raw_email is not None and not isinstance(raw_email, str):
+            raise ValueError("ground_truth_user_email must be a string or null.")
+        if raw_email:
+            ground_truth_user_email = raw_email
+
     return Task(
         id=task_id,
         site=site,
         compose_file=compose_file,
         start_url=start_url,
         expected_artifacts=dict(expected_artifacts),
+        credentials=credentials,
+        ground_truth_db=ground_truth_db,
+        ground_truth_user_email=ground_truth_user_email,
     )

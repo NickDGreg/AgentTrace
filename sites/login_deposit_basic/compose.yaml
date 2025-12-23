@@ -1,0 +1,8 @@
+services:
+  login_deposit_basic:
+    build:
+      context: .
+    ports:
+      - "18081:8000"
+    volumes:
+      - ./data:/app/data
