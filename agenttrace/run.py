@@ -6,16 +6,28 @@ import argparse
 import os
 import subprocess
 import sys
+import time
+import urllib.request
 from contextlib import contextmanager
 from typing import Iterable
 
 from . import Task, load_tasks, score_artifacts, validate_agent_output
 
+SITE_READY_TIMEOUT_SECONDS = 30
+SITE_READY_POLL_INTERVAL_SECONDS = 0.5
+SITE_READY_REQUEST_TIMEOUT_SECONDS = 2.0
+
 
 def main(argv: Iterable[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Run AgentTrace tasks against an external agent.")
-    parser.add_argument("--tasks-file", default="tasks/tasks.yaml", help="Path to tasks YAML file.")
-    parser.add_argument("--task-id", help="Specific task id to run (optional if single task).")
+    parser = argparse.ArgumentParser(
+        description="Run AgentTrace tasks against an external agent."
+    )
+    parser.add_argument(
+        "--tasks-file", default="tasks/tasks.yaml", help="Path to tasks YAML file."
+    )
+    parser.add_argument(
+        "--task-id", help="Specific task id to run (optional if single task)."
+    )
     parser.add_argument(
         "--agent-cmd",
         required=True,
@@ -45,6 +57,9 @@ def main(argv: Iterable[str] | None = None) -> int:
 
 
 def _run_task(task: Task, agent_cmd: str, timeout: int) -> int:
+    site_timeout = min(timeout, SITE_READY_TIMEOUT_SECONDS)
+    _wait_for_site(task.start_url, timeout=site_timeout)
+
     env = os.environ.copy()
     env["AGENTTRACE_START_URL"] = task.start_url
     env["AGENTTRACE_TASK_ID"] = task.id
@@ -73,6 +88,33 @@ def _run_task(task: Task, agent_cmd: str, timeout: int) -> int:
     status = "PASS" if passed else "FAIL"
     print(f"{status}: {diff}")
     return 0 if passed else 2
+
+
+def _wait_for_site(
+    url: str, timeout: int, interval: float = SITE_READY_POLL_INTERVAL_SECONDS
+) -> None:
+    deadline = time.monotonic() + timeout
+    last_error: Exception | None = None
+
+    while True:
+        try:
+            req = urllib.request.Request(
+                url, headers={"User-Agent": "AgentTraceRunner/0.1"}
+            )
+            request_timeout = min(SITE_READY_REQUEST_TIMEOUT_SECONDS, max(0.1, timeout))
+            with urllib.request.urlopen(req, timeout=request_timeout) as response:
+                response.read(1)
+            return
+        except Exception as exc:
+            last_error = exc
+
+        if time.monotonic() >= deadline:
+            break
+        time.sleep(interval)
+
+    raise RunnerError(
+        f"site did not become ready at {url} within {timeout}s: {last_error}"
+    )
 
 
 def _select_task(tasks: list[Task], task_id: str | None) -> Task:
