@@ -80,6 +80,17 @@ docker compose -f sites/simple_static/compose.yaml up --build
 
 The page becomes available at <http://localhost:18080/>. Tear it down with `docker compose -f sites/simple_static/compose.yaml down`.
 
+### Login + deposit site (Stage 2)
+The `sites/login_deposit_basic/` site provides a minimal login → dashboard → deposit flow backed by SQLite. It seeds a deterministic user and BTC/ETH addresses on startup.
+
+Run it locally with:
+
+```bash
+docker compose -f sites/login_deposit_basic/compose.yaml up --build
+```
+
+The site is available at <http://localhost:18081/login>.
+
 ### Task definitions
 Stage 0 ships with tasks stored in `tasks/tasks.yaml`. Tasks are declarative and include:
 - `id`: unique identifier
@@ -141,3 +152,5 @@ uv run python -m agenttrace.run \
 ```
 
 The dummy agent reads the start URL from `AGENTTRACE_START_URL`, fetches the HTML, extracts the first Bech32 BTC address, and prints JSON in the required format.
+
+For login flows, use `tools/dummy_agent_login.py` with the `login-deposit-basic` task. The runner will export `AGENTTRACE_EMAIL` and `AGENTTRACE_PASSWORD` from task credentials.

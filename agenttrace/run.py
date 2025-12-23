@@ -163,9 +163,16 @@ def _run_task(task: Task, agent_cmd: str, timeout: int) -> tuple[str, dict[str, 
         )
 
     if completed.returncode != 0:
+        stderr = completed.stderr.strip()
+        stdout = completed.stdout.strip()
+        details = [f"agent command exited with {completed.returncode}"]
+        if stderr:
+            details.append(f"stderr: {stderr}")
+        if stdout:
+            details.append(f"stdout: {stdout}")
         return "ERROR", _error_result(
             task.id,
-            f"agent command exited with {completed.returncode}. stderr: {completed.stderr.strip()}",
+            ". ".join(details),
             start_time,
             start_monotonic,
             start_iso,

@@ -18,3 +18,14 @@
 - **Step 1.5**: Standardized stdout task lines (`PASS|FAIL|ERROR <task_id>`) with a final totals line.
 - **Step 1.6**: Added tests for multi-task loading, duplicate-id failures, and suite selection/missing suite errors.
 - **Step 1.7**: Added a runner contract test that validates results JSON output without Docker.
+
+## Stage 2
+- **Step 2.1**: Added `login_deposit_basic` site scaffold (Flask app + Docker compose) on port 18081.
+- **Step 2.2**: Implemented login, dashboard, and deposit routes with session auth and redirects.
+- **Step 2.3**: Introduced SQLite persistence with user and deposit address tables.
+- **Step 2.4**: Added deterministic seeding (bcrypt user + BTC/ETH addresses) and idempotent startup.
+- **Step 2.5**: Rendered deposit addresses from the DB for authenticated users.
+- **Step 2.6**: Added DB-backed ground truth loading and exposed the DB via a host-mounted volume.
+- **Step 2.7**: Added the `login-deposit-basic` task entry with credentials and DB ground truth metadata.
+- **Step 2.8**: Added `tools/dummy_agent_login.py` for login-capable extraction and improved agent error reporting.
+- **Step 2.9**: Added fast site stability tests for login/deposit flow and seed validation.

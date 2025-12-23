@@ -9,7 +9,7 @@ from http.cookiejar import CookieJar
 
 
 def _extract_addresses(html: str) -> dict[str, str]:
-    pattern = re.compile(r"<strong>([^<]+)</strong>:\\s*<span>([^<]+)</span>")
+    pattern = re.compile(r"<strong>([^<]+)</strong>:\s*<span>([^<]+)</span>")
     return {chain.strip(): address.strip() for chain, address in pattern.findall(html)}
 
 
@@ -30,15 +30,34 @@ def main() -> int:
     )
     login_req = urllib.request.Request(login_url, data=login_data, method="POST")
     with opener.open(login_req, timeout=5) as resp:
-        resp.read()
+        login_body = resp.read().decode("utf-8", errors="replace")
+        login_url_after = resp.geturl()
+
+    if "/login" in login_url_after and "Invalid credentials" in login_body:
+        print(json.dumps({"error": {"message": "login failed: invalid credentials"}}))
+        return 1
 
     deposit_url = urllib.parse.urljoin(start_url, "/deposit")
     with opener.open(deposit_url, timeout=5) as resp:
         html = resp.read().decode("utf-8", errors="replace")
+        final_url = resp.geturl()
+
+    if "/login" in final_url or "<h1>Login</h1>" in html:
+        print(json.dumps({"error": {"message": "login failed: not authenticated"}}))
+        return 1
 
     artifacts = _extract_addresses(html)
     if not artifacts:
-        print(json.dumps({"error": {"message": "no addresses found"}}))
+        snippet = " ".join(html.split())[:200]
+        print(
+            json.dumps(
+                {
+                    "error": {
+                        "message": f"no addresses found; page snippet: {snippet}"
+                    }
+                }
+            )
+        )
         return 1
 
     print(json.dumps({"artifacts": artifacts}))
