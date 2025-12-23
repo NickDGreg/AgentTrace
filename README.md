@@ -154,3 +154,59 @@ uv run python -m agenttrace.run \
 The dummy agent reads the start URL from `AGENTTRACE_START_URL`, fetches the HTML, extracts the first Bech32 BTC address, and prints JSON in the required format.
 
 For login flows, use `tools/dummy_agent_login.py` with the `login-deposit-basic` task. The runner will export `AGENTTRACE_EMAIL` and `AGENTTRACE_PASSWORD` from task credentials.
+
+### How to run on your own agent
+AgentTrace treats your agent as a black box. The runner launches your agent as a subprocess and passes the task context via environment variables. Your agent must read the environment variables, drive the browser or HTTP client however it wants, and print a single JSON object to stdout that matches the AgentTrace output contract.
+
+Required environment variables
+- `AGENTTRACE_START_URL`: the URL the agent should start from.
+- `AGENTTRACE_TASK_ID`: the task identifier (optional for logic but useful for logging).
+- `AGENTTRACE_EMAIL` and `AGENTTRACE_PASSWORD`: only set for tasks that include credentials.
+
+Output contract (stdout)
+- Success: print a JSON object with `artifacts` only.
+- Failure: print a JSON object with `error` only.
+- Do not print extra text to stdout; use stderr for logs if needed.
+
+Example success output:
+
+```json
+{"artifacts": {"BTC": "bc1qexampleaddress", "ETH": "0xabc123..."}}
+```
+
+Example failure output:
+
+```json
+{"error": {"message": "Login page never responded"}}
+```
+
+Basic invocation (agent in another repo)
+
+```bash
+uv run python -m agenttrace.run \
+  --tasks-file tasks/tasks.yaml \
+  --task-id login-deposit-basic \
+  --agent-cmd "python /path/to/your-agent-repo/main.py"
+```
+
+If your agent uses its own venv, point at that interpreter:
+
+```bash
+uv run python -m agenttrace.run \
+  --tasks-file tasks/tasks.yaml \
+  --task-id login-deposit-basic \
+  --agent-cmd "/path/to/your-agent-repo/.venv/bin/python /path/to/your-agent-repo/main.py"
+```
+
+Using a CLI wrapper script
+
+```bash
+uv run python -m agenttrace.run \
+  --tasks-file tasks/tasks.yaml \
+  --suite smoke \
+  --agent-cmd "/path/to/your-agent-repo/run_agent.sh"
+```
+
+Exit codes
+- The runner returns `0` if all tasks pass, `2` if any task fails, and `1` if any task errors.
+- Your agent should return a non-zero exit code on failure; the runner will capture stdout and report it.
