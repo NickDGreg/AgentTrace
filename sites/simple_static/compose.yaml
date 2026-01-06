@@ -1,0 +1,11 @@
+services:
+  simple_static:
+    build:
+      context: .
+    ports:
+      - "18080:8000"
+    restart: unless-stopped
+
+networks:
+  default:
+    name: agenttrace-simple-static
