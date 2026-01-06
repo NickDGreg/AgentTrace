@@ -1,0 +1,8 @@
+services:
+  register_basic:
+    build:
+      context: .
+    ports:
+      - "18082:8000"
+    volumes:
+      - ./data:/app/data

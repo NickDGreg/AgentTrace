@@ -23,3 +23,15 @@ tasks:
       password: pass1
     ground_truth_db: sites/login_deposit_basic/data/site.db
     ground_truth_user_email: user1@example.com
+  - id: register-basic
+    site: register_basic
+    compose_file: sites/register_basic/compose.yaml
+    start_url: http://localhost:18082/
+    expected_artifacts:
+      BTC: bc1qagenttrace0register0basic000000000000000000
+      ETH: 0xagenttrace0register0basic00000000000000000000000
+    credentials:
+      email: user1@example.com
+      password: pass1
+    ground_truth_db: sites/register_basic/data/site.db
+    ground_truth_user_email: user1@example.com
