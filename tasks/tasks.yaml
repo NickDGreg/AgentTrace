@@ -35,3 +35,17 @@ tasks:
       password: pass1
     ground_truth_db: sites/register_basic/data/site.db
     ground_truth_user_email: user1@example.com
+  - id: site-one-deposit
+    site: site_one
+    compose_file: sites/site_one/compose.yaml
+    start_url: http://localhost:18083/login
+    expected_artifacts:
+      USDT: TrEAGGo4CFzBfQYB6U6UBfeLf9Y4NW7iEE
+      BTC: bc173ag6eqyfdrmc6uwhf2euz43vh76nr4h5rqkq6z
+      ETH: 0x9155bacde8b1e383cbd0b8d164bf82196fe2ec75
+      USDC: TxRUZMW1X489t8v3NxhvpXVq141mAHxcg7
+    credentials:
+      email: user1@example.com
+      password: pass1
+    ground_truth_db: sites/site_one/data/site.db
+    ground_truth_user_email: user1@example.com

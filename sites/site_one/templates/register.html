@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set form = form or {} %}
+<section class="auth-wrap">
+  <div class="auth-card">
+    <h2>Create your GoldenTradr ID</h2>
+    <p class="auth-sub">Tell us who you are and secure your deposit rail in seconds.</p>
+    {% if error %}
+      <div class="form-error">{{ error }}</div>
+    {% endif %}
+    <form method="post" action="{{ url_for('register') }}" class="auth-form">
+      <label>Name</label>
+      <input type="text" name="display_name" required data-required="true" value="{{ form.get('display_name', '') }}">
+
+      <label>Email</label>
+      <input type="email" name="email" required data-required="true" value="{{ form.get('email', '') }}">
+
+      <label>Password</label>
+      <input type="password" name="password" required data-required="true">
+
+      <label class="agree-row">
+        <input type="checkbox" name="agree" id="agree-box">
+        <span>Agree <a href="#">Terms</a></span>
+      </label>
+
+      <button class="btn btn-soft" type="submit" id="signup-btn" disabled>Sign Up</button>
+    </form>
+    <div class="auth-foot">Already have an account? <a href="{{ url_for('login') }}">Sign In</a></div>
+  </div>
+</section>
+{% endblock %}

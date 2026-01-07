@@ -1,0 +1,8 @@
+services:
+  site_one:
+    build:
+      context: .
+    ports:
+      - "18083:8000"
+    volumes:
+      - ./data:/app/data
