@@ -210,3 +210,21 @@ uv run python -m agenttrace.run \
 Exit codes
 - The runner returns `0` if all tasks pass, `2` if any task fails, and `1` if any task errors.
 - Your agent should return a non-zero exit code on failure; the runner will capture stdout and report it.
+
+### Agent scaffolding additions
+- Architecture codemap: `ARCHITECTURE.md`
+- Docs index: `docs/index.md`
+- Structural checks: `python -m agenttrace.scaffolding_checks`
+- Isolated parallel runs: `python -m agenttrace.run_isolated`
+- UI screenshots: `python tools/ui_snapshot.py --url <url> --out <path>`
+- Compose trace logs: `python tools/compose_logs.py --compose-file <compose.yaml> --out <path>`
+
+With Makefile shortcuts:
+
+```bash
+make test-fast
+make arch-check
+make run-isolated AGENT_CMD="python tools/dummy_agent.py" TASK_ID=simple-static-btc
+make ui-snapshot URL=http://localhost:18080/ OUT=results/ui/simple-static.png
+make compose-logs COMPOSE_FILE=sites/simple_static/compose.yaml OUT=results/traces/simple_static.log
+```

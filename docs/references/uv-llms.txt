@@ -1,0 +1,4 @@
+uv reference note:
+- Use uv for dependency resolution and command execution where available.
+- Migrate deprecated uv config fields proactively.
+- Keep dev toolchain minimal: pytest, mypy, ruff, coverage, playwright.

@@ -12,7 +12,7 @@ import urllib.request
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Iterator
 
 from . import Task, load_tasks, load_suite_ids, score_artifacts, validate_agent_output
 from .ground_truth import load_expected_artifacts_from_db
@@ -382,7 +382,7 @@ def _error_result(
 
 
 @contextmanager
-def _running_site(compose_file):
+def _running_site(compose_file: Path) -> Iterator[None]:
     compose_path = str(compose_file)
     up_cmd = ["docker", "compose", "-f", compose_path, "up", "-d"]
     down_cmd = ["docker", "compose", "-f", compose_path, "down"]

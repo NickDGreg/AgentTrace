@@ -1,0 +1,5 @@
+AgentTrace UI references for agents:
+- Keep synthetic site UI deterministic and minimal.
+- Prefer stable selectors and predictable page transitions.
+- Avoid dynamic animations that make extraction nondeterministic.
+- Add UI complexity only when it models a benchmark failure mode.

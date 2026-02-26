@@ -16,6 +16,26 @@ The benchmark exists to support:
 
 ⸻
 
+Docs navigation map
+
+Agents should use the docs tree as the primary project knowledge source:
+	•	`ARCHITECTURE.md` — bird's-eye architecture and codemap ("where does X live?")
+	•	`docs/index.md` — docs table of contents
+	•	`docs/DESIGN.md` + `docs/design-docs/*` — design intent and principles
+	•	`docs/product-specs/*` — user and workflow expectations
+	•	`docs/RELIABILITY.md` — runbooks and reliability standards
+	•	`docs/SECURITY.md` — benchmark security boundaries
+	•	`docs/QUALITY_SCORE.md` — quality rubric and current grade
+	•	`docs/PLANS.md` — ExecPlan standard and writing rules
+	•	`docs/exec-plans/active/*` — in-flight complex work
+	•	`docs/exec-plans/completed/*` — completed execution plans and decision logs
+	•	`docs/generated/*` — generated reference artifacts (for example DB schema notes)
+	•	`docs/references/*` — concise implementation references for tools/workflows
+
+When doing complex work, create/update an ExecPlan and keep progress + decisions current in that plan file.
+
+⸻
+
 What this repository contains
 
 Agents should assume this repository will contain:
@@ -124,6 +144,11 @@ Execute tasks using `python -m agenttrace.run --tasks-file tasks/tasks.yaml --ag
 
 Ensure your agent reads the start URL from the provided environment variable and prints JSON to stdout that matches the contract.
 
+For isolated parallel runs on shared hosts, use:
+`python -m agenttrace.run_isolated --tasks-file tasks/tasks.yaml --task-id <id> --agent-cmd "<your agent command>"`
+
+This rewrites compose host ports to ephemeral ports and runs tasks against temporary isolated compose files.
+
 ⸻
 
 Dummy agent
@@ -178,6 +203,9 @@ Python conventions
 	•	Prefer small, typed functions and clear dataclasses/Pydantic models for task schemas.
 	•	Write/extend tests first for schema, scoring, and runner behaviour (contract-driven development).
 	•	Avoid adding heavy frameworks unless necessary; keep the harness lightweight and deterministic.
+	•	Run `python -m agenttrace.scaffolding_checks` to enforce architecture/file-size/type-naming/print guardrails.
+	•	Use `python tools/ui_snapshot.py --url <url> --out <path>` for deterministic UI screenshot artifacts.
+	•	Use `python tools/compose_logs.py --compose-file <compose.yaml> --out <path>` to export trace logs for agent analysis.
 
 ⸻
 

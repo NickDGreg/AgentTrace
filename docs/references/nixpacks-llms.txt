@@ -1,0 +1,4 @@
+Nixpacks reference note:
+- Nixpacks is not currently used by AgentTrace.
+- Dockerfiles and docker compose are the canonical environment mechanism.
+- If Nixpacks is introduced later, document deterministic pinning and parity checks.
