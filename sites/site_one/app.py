@@ -209,6 +209,28 @@ def _ensure_user_addresses(db: sqlite3.Connection, user_id: int) -> None:
     db.commit()
 
 
+def _address_map_for_user(
+    db: sqlite3.Connection, user_id: int
+) -> dict[str, dict[str, str]]:
+    rows = db.execute(
+        """
+        SELECT asset, chain, address
+        FROM deposit_addresses
+        WHERE user_id = ?
+        """,
+        (user_id,),
+    ).fetchall()
+
+    address_map = {}
+    for row in rows:
+        address_map[row["asset"]] = {
+            "address": row["address"],
+            "chain": row["chain"],
+            "qr": _qr_svg_data_uri(row["address"]),
+        }
+    return address_map
+
+
 def _seed_db() -> None:
     now = datetime.now(timezone.utc).isoformat()
     with sqlite3.connect(DB_PATH) as db:
@@ -393,29 +415,29 @@ def account() -> str:
         return redirect(url_for("login"))
 
     _ensure_user_addresses(db, user_id)
-    rows = db.execute(
-        """
-        SELECT asset, chain, address
-        FROM deposit_addresses
-        WHERE user_id = ?
-        """,
-        (user_id,),
-    ).fetchall()
-
-    address_map = {}
-    for row in rows:
-        address_map[row["asset"]] = {
-            "address": row["address"],
-            "chain": row["chain"],
-            "qr": _qr_svg_data_uri(row["address"]),
-        }
-
-    default_asset = ASSET_ORDER[0]
     return render_template(
         "account.html",
         title="GoldenTradr | Account",
         masked_email=_mask_email(user["email"]),
         uid=user["uid"],
+    )
+
+
+@app.get("/account/deposit-panel")
+def account_deposit_panel():
+    if not _is_authenticated():
+        return "Unauthorized", 401
+
+    user_id = session.get("user_id")
+    if user_id is None:
+        return "Unauthorized", 401
+
+    db = _get_db()
+    _ensure_user_addresses(db, user_id)
+    address_map = _address_map_for_user(db, user_id)
+    default_asset = ASSET_ORDER[0]
+    return render_template(
+        "_deposit_panel.html",
         address_map=address_map,
         asset_order=ASSET_ORDER,
         default_asset=default_asset,

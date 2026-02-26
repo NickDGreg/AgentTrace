@@ -1,0 +1,59 @@
+<div id="deposit-panel" class="c-000 is-hidden" data-default-asset="{{ default_asset }}">
+  <div class="c-001">
+    <div class="c-002">Deposit</div>
+    <div class="c-003">Account: 0.0000 USD</div>
+  </div>
+
+  <div class="c-010">
+    <div class="c-011">Select:</div>
+    <div class="c-012">
+      <select id="asset-select" class="c-013">
+        {% for asset in asset_order %}
+          <option value="{{ asset }}" {% if asset == default_asset %}selected{% endif %}>{{ asset }}</option>
+        {% endfor %}
+      </select>
+      <span class="c-014"></span>
+    </div>
+  </div>
+
+  <div class="c-010">
+    <div class="c-011">Chain Name:</div>
+    <div class="c-012">
+      <select id="chain-select" class="c-013">
+        <option value="TRC20">TRC20</option>
+        <option value="ERC20">ERC20</option>
+        <option value="BTC">BTC</option>
+      </select>
+      <span class="c-014"></span>
+    </div>
+  </div>
+
+  <div class="c-020">
+    <div class="c-021">Deposit Address</div>
+    <div id="deposit-address" class="c-022" style="word-break: break-all;">{{ address_map[default_asset]["address"] }}</div>
+    <div class="c-023" data-action="copy-address">Copy address</div>
+    <div class="c-024">Security tip: Only send {{ default_asset }} to this address. Assets sent here are credited automatically.</div>
+  </div>
+
+  <div class="c-030">
+    <div class="qr-box">
+      <img id="deposit-qr" src="{{ address_map[default_asset]["qr"] }}" alt="Deposit QR">
+    </div>
+    <div class="qr-meta">
+      <div class="qr-title">Scan with GoldenTradr</div>
+      <div class="qr-sub">Wallet will auto-detect the network.</div>
+    </div>
+  </div>
+
+  <div class="c-040">
+    <label>Quantity</label>
+    <input type="text" placeholder="Enter amount">
+  </div>
+
+  <div class="c-050">
+    <div class="upload-title">Upload voucher</div>
+    <div class="upload-box">Drag your receipt here or <span>browse</span></div>
+  </div>
+</div>
+
+<script type="application/json" data-address-map="true">{{ address_map | tojson }}</script>
