@@ -8,6 +8,7 @@
 - `docs/QUALITY_SCORE.md`: quality rubric and grades
 - `docs/RELIABILITY.md`: reliability standards and runbooks
 - `docs/SECURITY.md`: security boundaries
+- `docs/references/agenttrace-agent-manual.md`: detailed long-form agent guidance
 
 Subdirectories:
 - `docs/design-docs/`
