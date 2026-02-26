@@ -4,20 +4,20 @@ tasks:
     compose_file: sites/simple_static/compose.yaml
     start_url: http://localhost:18080/
     expected_artifacts:
-      BTC: bc1qagenttrace0static0stage000000000000000000
+      BTC: "bc1qagenttrace0static0stage000000000000000000"
   - id: simple-static-btc-2
     site: simple_static
     compose_file: sites/simple_static/compose.yaml
     start_url: http://localhost:18080/
     expected_artifacts:
-      BTC: bc1qagenttrace0static0stage000000000000000000
+      BTC: "bc1qagenttrace0static0stage000000000000000000"
   - id: login-deposit-basic
     site: login_deposit_basic
     compose_file: sites/login_deposit_basic/compose.yaml
     start_url: http://localhost:18081/login
     expected_artifacts:
-      BTC: bc1qagenttrace0login0deposit0basic0000000000000000
-      ETH: 0xagenttrace0login0deposit0basic0000000000000000000
+      BTC: "bc1qagenttrace0login0deposit0basic0000000000000000"
+      ETH: "0xagenttrace0login0deposit0basic0000000000000000000"
     credentials:
       email: user1@example.com
       password: pass1
@@ -28,8 +28,8 @@ tasks:
     compose_file: sites/register_basic/compose.yaml
     start_url: http://localhost:18082/
     expected_artifacts:
-      BTC: bc1qagenttrace0register0basic000000000000000000
-      ETH: 0xagenttrace0register0basic00000000000000000000000
+      BTC: "bc1qagenttrace0register0basic000000000000000000"
+      ETH: "0xagenttrace0register0basic00000000000000000000000"
     credentials:
       email: user1@example.com
       password: pass1
@@ -40,10 +40,10 @@ tasks:
     compose_file: sites/site_one/compose.yaml
     start_url: http://localhost:18083/login
     expected_artifacts:
-      USDT: TrEAGGo4CFzBfQYB6U6UBfeLf9Y4NW7iEE
-      BTC: bc173ag6eqyfdrmc6uwhf2euz43vh76nr4h5rqkq6z
-      ETH: 0x9155bacde8b1e383cbd0b8d164bf82196fe2ec75
-      USDC: TxRUZMW1X489t8v3NxhvpXVq141mAHxcg7
+      USDT: "TrEAGGo4CFzBfQYB6U6UBfeLf9Y4NW7iEE"
+      BTC: "bc173ag6eqyfdrmc6uwhf2euz43vh76nr4h5rqkq6z"
+      ETH: "0x9155bacde8b1e383cbd0b8d164bf82196fe2ec75"
+      USDC: "TxRUZMW1X489t8v3NxhvpXVq141mAHxcg7"
     credentials:
       email: user1@example.com
       password: pass1
