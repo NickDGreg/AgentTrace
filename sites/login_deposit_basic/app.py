@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from flask import Flask, g, redirect, request, session, url_for
 from pathlib import Path
+import os
 import bcrypt
 import sqlite3
 
@@ -108,6 +109,14 @@ def _seed_db() -> None:
         db.commit()
 
 
+def _log_external_access() -> None:
+    external_url = os.environ.get("AGENTTRACE_EXTERNAL_URL")
+    if external_url:
+        print(f"[agenttrace] external URL: {external_url}")
+    else:
+        print("[agenttrace] external URL not set; access via docker port mapping.")
+
+
 @app.get("/login")
 def login() -> str:
     return """
@@ -190,4 +199,5 @@ def deposit():
 if __name__ == "__main__":
     _init_db()
     _seed_db()
+    _log_external_access()
     app.run(host="0.0.0.0", port=8000)

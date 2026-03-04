@@ -18,6 +18,8 @@ def test_rewrite_compose_with_ephemeral_ports_updates_host_ports(tmp_path: Path)
 services:
   web:
     image: demo
+    environment:
+      AGENTTRACE_EXTERNAL_URL: http://localhost:18080/login
     ports:
       - "18080:8000"
       - "127.0.0.1:18081:8001/tcp"
@@ -37,6 +39,8 @@ services:
     assert str(port_map[18080]) in ports[0]
     assert isinstance(ports[1], str)
     assert str(port_map[18081]) in ports[1]
+    external_url = rewritten["services"]["web"]["environment"]["AGENTTRACE_EXTERNAL_URL"]
+    assert f"localhost:{port_map[18080]}" in external_url
 
 
 def test_build_isolated_tasks_updates_compose_and_start_url(tmp_path: Path) -> None:
@@ -71,4 +75,3 @@ services:
 
     assert "compose_files" in manifest
     assert len(manifest["compose_files"]) == 1
-

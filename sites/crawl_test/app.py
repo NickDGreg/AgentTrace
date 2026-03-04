@@ -10,7 +10,7 @@ import hashlib
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = "agenttrace-site-one"
+app.secret_key = "agenttrace-crawl-test"
 app.url_map.strict_slashes = False
 
 DB_PATH = Path("/app/data/site.db")
@@ -270,6 +270,32 @@ def _seed_db() -> None:
         _ensure_user_addresses(db, user_id)
 
 
+def _active_user_id(db: sqlite3.Connection) -> int | None:
+    session_user_id = session.get("user_id")
+    if session_user_id is not None:
+        row = db.execute(
+            "SELECT id FROM users WHERE id = ?",
+            (session_user_id,),
+        ).fetchone()
+        if row is not None:
+            return row["id"]
+
+    seed_user = db.execute(
+        "SELECT id FROM users WHERE email = ?",
+        (SEED_EMAIL,),
+    ).fetchone()
+    if seed_user is not None:
+        return seed_user["id"]
+
+    first_user = db.execute(
+        "SELECT id FROM users ORDER BY id ASC LIMIT 1",
+    ).fetchone()
+    if first_user is not None:
+        return first_user["id"]
+
+    return None
+
+
 def _log_external_access() -> None:
     external_url = os.environ.get("AGENTTRACE_EXTERNAL_URL")
     if external_url:
@@ -399,29 +425,22 @@ def logout():
 
 @app.get("/index")
 def index() -> str:
-    auth = _require_auth()
-    if auth is not None:
-        return auth
     return render_template("index.html", title="GoldenTradr | Portfolio")
 
 
 @app.get("/account")
 def account() -> str:
-    auth = _require_auth()
-    if auth is not None:
-        return auth
-
-    user_id = session.get("user_id")
-    if user_id is None:
-        return redirect(url_for("login"))
-
     db = _get_db()
+    user_id = _active_user_id(db)
+    if user_id is None:
+        return "No user available.", 503
+
     user = db.execute(
         "SELECT id, email, uid FROM users WHERE id = ?",
         (user_id,),
     ).fetchone()
     if user is None:
-        return redirect(url_for("login"))
+        return "No user available.", 503
 
     _ensure_user_addresses(db, user_id)
     return render_template(
@@ -434,14 +453,11 @@ def account() -> str:
 
 @app.get("/account/deposit-panel")
 def account_deposit_panel():
-    if not _is_authenticated():
-        return "Unauthorized", 401
-
-    user_id = session.get("user_id")
-    if user_id is None:
-        return "Unauthorized", 401
-
     db = _get_db()
+    user_id = _active_user_id(db)
+    if user_id is None:
+        return "No user available.", 503
+
     _ensure_user_addresses(db, user_id)
     address_map = _address_map_for_user(db, user_id)
     default_asset = ASSET_ORDER[0]

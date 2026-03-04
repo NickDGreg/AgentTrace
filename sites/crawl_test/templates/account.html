@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="account-wrap">
+  <div class="crumb c-101">
+    <span>Home</span>
+    <span class="crumb-sep">&gt;</span>
+    <span>My account</span>
+    <span id="crumb-deposit" class="crumb-deposit">&gt; Deposit</span>
+  </div>
+
+  <div class="profile-card">
+    <div class="avatar"></div>
+    <div>
+      <div class="masked-email">{{ masked_email }}</div>
+      <div class="uid-line">UID: {{ uid }}</div>
+    </div>
+  </div>
+
+  <div class="balance-card">
+    <div>
+      <div class="balance-label">Account</div>
+      <div class="balance-value">0.0000 USD</div>
+    </div>
+    <div>
+      <div class="balance-label">XAUT</div>
+      <div class="balance-value">0.0000 XAUT</div>
+    </div>
+    <div>
+      <div class="balance-label">Loan</div>
+      <div class="balance-value">0 USD</div>
+    </div>
+  </div>
+
+  <div id="account-overview" class="overview-block">
+    <div class="action-row">
+      <div class="action-card" data-action="show-deposit">
+        <div class="action-icon">D</div>
+        <div>Deposit</div>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">W</div>
+        <div>Withdraw</div>
+      </div>
+      <div class="action-card">
+        <div class="action-icon">E</div>
+        <div>Exchange</div>
+      </div>
+    </div>
+
+    <div class="segment-row">
+      <div class="segment active">Contract</div>
+      <div class="segment">Options</div>
+    </div>
+    <div class="segment-row">
+      <div class="segment active">Position</div>
+      <div class="segment">Pending</div>
+      <div class="segment">Contract record</div>
+    </div>
+    <div class="empty-state">No data</div>
+  </div>
+
+  <div
+    id="deposit-panel-container"
+    data-panel-url="{{ url_for('account_deposit_panel') }}"
+  ></div>
+</section>
+{% endblock %}

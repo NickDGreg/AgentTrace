@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-mark"></div>
+      <span>GoldenTradr</span>
+    </div>
+    <h2>Sign in</h2>
+    <p class="auth-sub">Access your account and manage your assets.</p>
+    {% if error %}
+      <div class="form-error">{{ error }}</div>
+    {% endif %}
+    <form method="post" action="{{ url_for('login') }}" class="auth-form">
+      <label>Account</label>
+      <input type="text" name="account" placeholder="Enter your user name" required>
+
+      <label>Password</label>
+      <input type="password" name="password" required>
+
+      <div class="link-row">
+        <a href="{{ url_for('register') }}">Sign Up</a>
+        <a href="#">Forgot password</a>
+      </div>
+
+      <button class="btn btn-dark" type="submit">Sign In</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -193,6 +193,7 @@ def rewrite_compose_with_ephemeral_ports(
             continue
         ports = service_def.get("ports")
         if not isinstance(ports, list):
+            _rewrite_external_url_env(service_def, port_map)
             continue
         rewritten_ports: list[Any] = []
         for entry in ports:
@@ -207,6 +208,7 @@ def rewrite_compose_with_ephemeral_ports(
             else:
                 rewritten_ports.append(entry)
         service_def["ports"] = rewritten_ports
+        _rewrite_external_url_env(service_def, port_map)
 
     output_path.write_text(
         yaml.safe_dump(payload, sort_keys=False),
@@ -298,6 +300,31 @@ def _rewrite_port_mapping_object(
     return rewritten
 
 
+def _rewrite_external_url_env(service_def: dict[str, Any], port_map: dict[int, int]) -> None:
+    environment = service_def.get("environment")
+    if isinstance(environment, dict):
+        value = environment.get("AGENTTRACE_EXTERNAL_URL")
+        if isinstance(value, str):
+            environment["AGENTTRACE_EXTERNAL_URL"] = rewrite_start_url_port(
+                value, port_map
+            )
+        return
+
+    if isinstance(environment, list):
+        rewritten_env: list[Any] = []
+        for entry in environment:
+            if (
+                isinstance(entry, str)
+                and entry.startswith("AGENTTRACE_EXTERNAL_URL=")
+            ):
+                _, raw_url = entry.split("=", 1)
+                rewritten_url = rewrite_start_url_port(raw_url, port_map)
+                rewritten_env.append(f"AGENTTRACE_EXTERNAL_URL={rewritten_url}")
+            else:
+                rewritten_env.append(entry)
+        service_def["environment"] = rewritten_env
+
+
 def _reserve_ephemeral_port(used_ports: set[int]) -> int:
     while True:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -316,4 +343,3 @@ def _write_manifest(manifest: dict[str, Any], manifest_file: str) -> None:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

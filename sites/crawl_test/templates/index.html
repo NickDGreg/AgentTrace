@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dash-hero">
+  <div>
+    <h1>Welcome back</h1>
+    <p class="dash-sub">Your portfolio is synchronized across markets. Review the latest signals and open positions.</p>
+    <div class="dash-tags">
+      <span class="badge">AI Strategy: Active</span>
+      <span class="badge">Risk Level: Moderate</span>
+      <span class="badge">Loan Margin: 0.00</span>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">Portfolio Growth</div>
+    <div class="chart-line"></div>
+    <div class="chart-line faint"></div>
+  </div>
+</section>
+
+<section class="ticker-grid">
+  <div class="ticker-card">
+    <h3>BTC/USDT</h3>
+    <p>$42,108</p>
+    <span>+2.3%</span>
+  </div>
+  <div class="ticker-card">
+    <h3>ETH/USDT</h3>
+    <p>$2,305</p>
+    <span>+1.1%</span>
+  </div>
+  <div class="ticker-card">
+    <h3>XAUT</h3>
+    <p>$1,983</p>
+    <span>-0.4%</span>
+  </div>
+  <div class="ticker-card">
+    <h3>USDC</h3>
+    <p>$1.000</p>
+    <span>0.0%</span>
+  </div>
+</section>
+
+<section class="feed-grid">
+  <div class="feed-card">
+    <h3>Open Orders</h3>
+    <div class="empty-state">No open orders</div>
+  </div>
+  <div class="feed-card">
+    <h3>Strategy Log</h3>
+    <ul class="log-list">
+      <li>Grid refresh at 14:05 UTC</li>
+      <li>Auto-balance executed at 13:42 UTC</li>
+      <li>Risk shield recalibrated at 12:16 UTC</li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

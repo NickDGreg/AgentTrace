@@ -78,6 +78,9 @@ Dependency direction is checked mechanically by `agenttrace.scaffolding_checks`.
 - `sites/site_one/`
   - Multi-page scam-style UX with richer templates and generated addresses.
 
+- `sites/crawl_test/`
+  - `site_one`-derived flow for crawler development where pages remain accessible without login gating.
+
 Each site family includes a `compose.yaml` and image build files for reproducible startup.
 
 ### Tasks and suites

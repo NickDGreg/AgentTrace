@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-head">
+  <h1>Market</h1>
+  <p class="page-sub">Live listings across spot and derivatives. Data updates every 30 seconds.</p>
+</section>
+
+<section class="table-card">
+  <table>
+    <thead>
+      <tr>
+        <th>Pair</th>
+        <th>Price</th>
+        <th>24h</th>
+        <th>Volume</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>BTC/USDT</td>
+        <td>$42,108</td>
+        <td class="pos">+2.3%</td>
+        <td>$1.2B</td>
+      </tr>
+      <tr>
+        <td>ETH/USDT</td>
+        <td>$2,305</td>
+        <td class="pos">+1.1%</td>
+        <td>$620M</td>
+      </tr>
+      <tr>
+        <td>XAUT/USDT</td>
+        <td>$1,983</td>
+        <td class="neg">-0.4%</td>
+        <td>$42M</td>
+      </tr>
+      <tr>
+        <td>ADA/USDT</td>
+        <td>$0.53</td>
+        <td class="pos">+0.6%</td>
+        <td>$94M</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+{% endblock %}

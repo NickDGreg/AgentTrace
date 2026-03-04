@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">Premium access for global crypto markets</div>
+    <h1 class="hero-title">Invest in your future.<br>Grow your portfolio in a fair and open financial system.</h1>
+    <p class="hero-sub">GoldenTradr blends automated strategy routing with deep liquidity to keep your trades stable even in volatile markets.</p>
+    <div class="hero-actions">
+      <a class="btn btn-dark" href="{{ url_for('register') }}">Create Account</a>
+      <a class="btn btn-outline" href="{{ url_for('login') }}">I already have an account</a>
+    </div>
+    <div class="feature-row">
+      <div class="feature-card">
+        <div class="icon-dot"></div>
+        <div>
+          <h3>App</h3>
+          <p>Manage multi-asset portfolios, auto-staking, and layered security approvals from one secure vault.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="icon-dot"></div>
+        <div>
+          <h3>Crypto</h3>
+          <p>Instant swaps across major chains with transparent fees and real-time routing status.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="phone phone-a">
+      <div class="phone-header">Golden AI</div>
+      <div class="phone-line"></div>
+      <div class="phone-line short"></div>
+      <div class="phone-chip">Momentum</div>
+      <div class="phone-chip">Grid</div>
+      <div class="phone-chip">Yield</div>
+    </div>
+    <div class="phone phone-b">
+      <div class="phone-header">Portfolio</div>
+      <div class="phone-line"></div>
+      <div class="phone-line"></div>
+      <div class="phone-line short"></div>
+      <div class="phone-chart"></div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-strip">
+  <div>
+    <div class="stat-value">$3.8 B</div>
+    <div class="stat-label">24h Trading Volume</div>
+  </div>
+  <div>
+    <div class="stat-value">350+</div>
+    <div class="stat-label">Crypto listing</div>
+  </div>
+  <div>
+    <div class="stat-value">1.2 M</div>
+    <div class="stat-label">Registered Users</div>
+  </div>
+</section>
+
+<section class="market-preview">
+  <div class="market-card">
+    <h3>Market Pulse</h3>
+    <p>BTC dominance edges higher as stablecoin inflows rise across TRC20 rails.</p>
+    <div class="ticker-row">
+      <span>BTC/USDT</span><strong>$42,108</strong><em>+2.3%</em>
+    </div>
+    <div class="ticker-row">
+      <span>ETH/USDT</span><strong>$2,305</strong><em>+1.1%</em>
+    </div>
+  </div>
+  <div class="market-card">
+    <h3>Golden AI Insights</h3>
+    <p>Adaptive grid strategies keep your portfolio balanced during intraday swings.</p>
+    <div class="badge-row">
+      <span class="badge">Auto-hedge</span>
+      <span class="badge">12x Signals</span>
+      <span class="badge">Low latency</span>
+    </div>
+  </div>
+</section>
+{% endblock %}

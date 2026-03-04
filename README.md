@@ -91,6 +91,17 @@ docker compose -f sites/login_deposit_basic/compose.yaml up --build
 
 The site is available at <http://localhost:18081/login>.
 
+### Crawl test site (no auth wall)
+The `sites/crawl_test/` site is a copy of `site_one` with authentication gates removed for crawler development. Login/register pages are still present, but `/index`, `/account`, and `/account/deposit-panel` are accessible without prior sign-in.
+
+Run it locally with:
+
+```bash
+docker compose -f sites/crawl_test/compose.yaml up --build
+```
+
+The site is available at <http://localhost:18084/>.
+
 ### Task definitions
 Stage 0 ships with tasks stored in `tasks/tasks.yaml`. Tasks are declarative and include:
 - `id`: unique identifier

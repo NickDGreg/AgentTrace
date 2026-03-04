@@ -1,10 +1,10 @@
 services:
-  login_deposit_basic:
+  crawl_test:
     build:
       context: .
     environment:
-      AGENTTRACE_EXTERNAL_URL: http://localhost:18081/login
+      AGENTTRACE_EXTERNAL_URL: http://localhost:18084/
     ports:
-      - "18081:8000"
+      - "18084:8000"
     volumes:
       - ./data:/app/data

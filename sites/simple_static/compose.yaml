@@ -2,6 +2,8 @@ services:
   simple_static:
     build:
       context: .
+    environment:
+      AGENTTRACE_EXTERNAL_URL: http://localhost:18080/
     ports:
       - "18080:8000"
     restart: unless-stopped
