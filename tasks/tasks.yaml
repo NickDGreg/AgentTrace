@@ -49,3 +49,16 @@ tasks:
       password: pass1
     ground_truth_db: sites/site_one/data/site.db
     ground_truth_user_email: user1@example.com
+  - id: site-two-deposit
+    site: site_two
+    compose_file: sites/site_two/compose.yaml
+    start_url: http://localhost:18084/login
+    expected_artifacts:
+      BCH: "bitcoincash:qqhhjd9cxeanz78qxs69fg80l2r9vjp2ufu5dyc8qh"
+      BTC: "bc12823hhln922dgsy8m7qd8n828jvfev8u05n4lp7"
+      ETH: "0x0b285758aed62f5d393d2f1879eef59b3a252bdb"
+    credentials:
+      email: user1@example.com
+      password: pass1
+    ground_truth_db: sites/site_two/data/site.db
+    ground_truth_user_email: user1@example.com

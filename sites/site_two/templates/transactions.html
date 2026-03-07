@@ -1,0 +1,37 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="panel-card">
+  <h2>Transaction Records</h2>
+  <p class="panel-sub">Funding, signal purchases, and outgoing requests.</p>
+
+  <div class="table-wrap">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Type</th>
+          <th>Channel</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ref, tx_type, channel, amount, status in rows %}
+          <tr>
+            <td>{{ ref }}</td>
+            <td>{{ tx_type }}</td>
+            <td>{{ channel }}</td>
+            <td>{{ amount }}</td>
+            <td>
+              <span class="status-pill {% if status == 'Pending' %}review{% elif status == 'Processing' %}hold{% else %}rejected{% endif %}">
+                {{ status }}
+              </span>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

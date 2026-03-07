@@ -1,0 +1,38 @@
+{% extends "marketing_base.html" %}
+
+{% block marketing_content %}
+<main class="marketing-main">
+  <section class="page-card">
+    <h1>Contact</h1>
+    <p>Use the form below to simulate support outreach and routing behavior.</p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <strong>Support Email</strong>
+        <p>support@equity-axis.example</p>
+      </div>
+      <div class="contact-card">
+        <strong>Support Line</strong>
+        <p>+44 0000 111222</p>
+      </div>
+    </div>
+
+    {% if submitted %}
+      <div class="form-ok">Message submitted. A support rep will follow up.</div>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('contact') }}" class="contact-form">
+      <label>Name
+        <input type="text" name="name" required>
+      </label>
+      <label>Email
+        <input type="email" name="email" required>
+      </label>
+      <label>Message
+        <textarea name="message" rows="5" required></textarea>
+      </label>
+      <button type="submit" class="btn-primary">Send message</button>
+    </form>
+  </section>
+</main>
+{% endblock %}

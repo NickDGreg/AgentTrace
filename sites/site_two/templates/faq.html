@@ -1,0 +1,27 @@
+{% extends "marketing_base.html" %}
+
+{% block marketing_content %}
+<main class="marketing-main">
+  <section class="page-card">
+    <h1>Frequently Asked Questions</h1>
+    <div class="faq-list">
+      <details open>
+        <summary>How do I create an account?</summary>
+        <p>Use the Sign up button, complete the registration form, and then sign in.</p>
+      </details>
+      <details>
+        <summary>Where do I find crypto deposit addresses?</summary>
+        <p>After login, open Deposit, choose method and amount, then continue to Payment.</p>
+      </details>
+      <details>
+        <summary>Can I access dashboard pages without signing in?</summary>
+        <p>No. All account and dashboard pages are behind the authentication wall.</p>
+      </details>
+      <details>
+        <summary>Which payment methods are available?</summary>
+        <p>Bitcoin Cash, Ethereum, and Bitcoin checkout flows are available.</p>
+      </details>
+    </div>
+  </section>
+</main>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+  </head>
+  <body class="home-body">
+    <header class="home-header">
+      <div class="home-ticker">
+        <span>XAUUSD <b class="up">1478.81</b></span>
+        <span>GBPUSD <b class="down">1.3191</b></span>
+        <span>EURUSD <b class="down">1.1159</b></span>
+        <span>USDJPY <b class="up">109.59</b></span>
+        <span>USDCAD <b class="up">1.3172</b></span>
+      </div>
+
+      <nav class="home-nav">
+        <a class="home-logo" href="{{ url_for('index') }}">Equity Axis</a>
+        <div class="home-links">
+          <a href="{{ url_for('index') }}">Home</a>
+          <a href="{{ url_for('about') }}">About</a>
+          <a href="{{ url_for('contact') }}">Contact</a>
+          <a href="{{ url_for('faq') }}">FAQ</a>
+        </div>
+        <div class="home-auth">
+          <a class="home-link-btn" href="{{ url_for('login') }}">Login</a>
+          <a class="home-link-btn strong" href="{{ url_for('register') }}">Sign up</a>
+        </div>
+      </nav>
+    </header>
+
+    {% block marketing_content %}{% endblock %}
+  </body>
+</html>

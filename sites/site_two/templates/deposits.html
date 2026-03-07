@@ -1,0 +1,52 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="cards-two">
+  <article class="panel-card">
+    <h2>Deposit Using Bitcoin Cash | Ethereum | Bitcoin</h2>
+    <p class="panel-sub">
+      Please upload payment proof after transfer so your account can be funded automatically.
+    </p>
+
+    {% if error %}
+      <div class="form-error">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('new_deposit') }}" class="stack-form">
+      <label>Amount ($)
+        <input type="number" step="0.01" min="10" name="amount" placeholder="0.00" required>
+      </label>
+
+      <label>Payment Option
+        <select name="payment_mode" required>
+          <option value="" selected disabled>--Select Payment Option--</option>
+          {% for option in payment_options %}
+            <option value="{{ option }}">{{ option }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <button type="submit" class="btn-accent right">Proceed to Payment</button>
+    </form>
+  </article>
+
+  <article class="panel-card">
+    <h2>Other Deposit Options</h2>
+    <p class="panel-sub">
+      Request additional payment rails via support. You will receive payment details by email.
+    </p>
+    <form class="stack-form">
+      <label>Payment Option For
+        <select>
+          <option selected disabled>--Select Payment Option--</option>
+          <option>BANK TRANSFER</option>
+          <option>USDT</option>
+          <option>PAYPAL</option>
+          <option>WESTERN UNION</option>
+        </select>
+      </label>
+      <button type="button" class="btn-ghost right">Request</button>
+    </form>
+  </article>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="cover-card">
+  <div class="cover-left">
+    <div class="avatar-placeholder"></div>
+    <div>
+      <h1>{{ user["display_name"] }}</h1>
+      <p>{{ user["country"] }}</p>
+      <div class="cover-actions">
+        <a class="btn-accent" href="{{ url_for('deposits') }}">Deposit</a>
+        <a class="btn-accent" href="{{ url_for('withdrawals') }}">Withdraw</a>
+      </div>
+    </div>
+  </div>
+  <div class="cover-stats">
+    <div>
+      <h3>Investment</h3>
+      <span>$0.00</span>
+      <h4>Signal Fee</h4>
+      <span>$0.0</span>
+    </div>
+    <div>
+      <h3>Total Balance</h3>
+      <span>$0.0</span>
+      <h4>Total Earning</h4>
+      <span>$0.0</span>
+    </div>
+  </div>
+</section>
+
+<section class="panel-card">
+  <h2>Account Summary</h2>
+  <div class="summary-grid">
+    <div><strong>Registration Date</strong><span>{{ registration_date }}</span></div>
+    <div><strong>Package</strong><span>None</span></div>
+    <div><strong>Signal</strong><span>None</span></div>
+    <div><strong>Account Type</strong><span>Forex Trading</span></div>
+    <div><strong>Account Status</strong><span class="badge-warning">Unverified</span></div>
+  </div>
+</section>
+{% endblock %}

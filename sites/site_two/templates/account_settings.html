@@ -1,0 +1,32 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="panel-card">
+  <h2>Account Settings</h2>
+  <p class="panel-sub">Profile information | Reg. {{ registration_date }}</p>
+
+  <div class="settings-grid">
+    <label>First Name
+      <input type="text" value="{{ user['display_name'] }}" readonly>
+    </label>
+    <label>Phone
+      <input type="text" value="{{ user['phone'] }}" readonly>
+    </label>
+    <label>UserName
+      <input type="text" value="{{ user['display_name'] }}" readonly>
+    </label>
+    <label>Email
+      <input type="text" value="{{ user['email'] }}" readonly>
+    </label>
+    <label>Country
+      <input type="text" value="{{ user['country'] }}" readonly>
+    </label>
+    <label>State / Province
+      <input type="text" value="newcastle" readonly>
+    </label>
+    <label class="wide">Address
+      <input type="text" value="23 Main street" readonly>
+    </label>
+  </div>
+</section>
+{% endblock %}

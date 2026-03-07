@@ -1,0 +1,41 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="panel-card">
+  <h2>Purchase Signal Plan</h2>
+  <p class="panel-sub">Choose signal package and payment method to reveal the checkout wallet.</p>
+
+  {% if error %}
+    <div class="form-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('signal_new_deposit') }}" class="stack-form">
+    <label>Full Name
+      <input type="text" value="{{ user['display_name'] }}" readonly>
+    </label>
+    <label>Email
+      <input type="text" value="{{ user['email'] }}" readonly>
+    </label>
+
+    <label>Signal
+      <select name="signal" required>
+        <option value="" selected disabled>--Select Signal--</option>
+        {% for signal_name, amount in signal_plans.items() %}
+          <option value="{{ signal_name }}">{{ signal_name }} ${{ amount }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Select payment method
+      <select name="paymethod" required>
+        <option value="" selected disabled>--Select Payment Option--</option>
+        {% for option in payment_options %}
+          <option value="{{ option }}">{{ option }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <button type="submit" class="btn-accent">Purchase Signal</button>
+  </form>
+</section>
+{% endblock %}

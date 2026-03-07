@@ -1,0 +1,33 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="panel-card">
+  <h2>Account Trading History</h2>
+  <p class="panel-sub">Closed positions and realized P/L across all instruments.</p>
+
+  <div class="table-wrap">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Asset</th>
+          <th>Side</th>
+          <th>Size</th>
+          <th>P/L</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for time, asset, side, size, pnl in rows %}
+          <tr>
+            <td>{{ time }}</td>
+            <td>{{ asset }}</td>
+            <td>{{ side }}</td>
+            <td>{{ size }}</td>
+            <td>{{ pnl }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

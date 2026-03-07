@@ -1,0 +1,10 @@
+services:
+  site_two:
+    build:
+      context: .
+    environment:
+      AGENTTRACE_EXTERNAL_URL: http://localhost:18084/login
+    ports:
+      - "18084:8000"
+    volumes:
+      - ./data:/app/data

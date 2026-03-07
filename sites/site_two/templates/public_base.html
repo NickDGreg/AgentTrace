@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title or "site_two" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+  </head>
+  <body class="public-body">
+    <div class="public-shell">
+      <section class="public-side">
+        <div class="public-overlay"></div>
+        <div class="public-content">
+          <div class="site-brand">Market Axis</div>
+          <h1>Crypto trading dashboard</h1>
+          <p>Register, sign in, and complete your deposit flow to reveal the payment wallet.</p>
+        </div>
+      </section>
+
+      <section class="auth-side">
+        {% block auth_content %}{% endblock %}
+      </section>
+    </div>
+
+    {% if show_notice %}
+      <div id="notice-modal" class="modal-backdrop">
+        <div class="notice-card">
+          <div class="notice-icon">i</div>
+          <h2>ATTENTION PLEASE!</h2>
+          <p>
+            Deposits/payments should be made directly to the company crypto address shown
+            during payment checkout so transactions can be verified.
+          </p>
+          <button type="button" class="btn-primary" data-close-modal>Okay</button>
+        </div>
+      </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='site.js') }}" defer></script>
+  </body>
+</html>

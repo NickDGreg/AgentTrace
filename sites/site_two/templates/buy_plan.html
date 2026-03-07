@@ -1,0 +1,38 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="panel-card">
+  <h2>Account Upgrade Plans</h2>
+  <p class="panel-sub">Select the package that matches your funding and support tier.</p>
+
+  <div class="plans-grid">
+    {% for plan in plans %}
+      <article class="plan-card">
+        <h3>{{ plan.name }}</h3>
+        <div class="plan-price">Min deposit: ${{ plan.min_deposit }}</div>
+        <p class="panel-sub">Expected range: ${{ plan.profit_range }}</p>
+        <ul class="feature-list">
+          {% for feature in plan.features %}
+            <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+        <button type="button" class="btn-accent">Request Upgrade</button>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="panel-card">
+  <h2>Signal Packages</h2>
+  <p class="panel-sub">You can also purchase a signal package directly from the signal page.</p>
+  <div class="plans-grid">
+    {% for signal_name, amount in signal_plans.items() %}
+      <article class="plan-card compact">
+        <h3>{{ signal_name }}</h3>
+        <div class="plan-price">${{ amount }}</div>
+        <a class="btn-accent" href="{{ url_for('signal') }}">Open Signal Checkout</a>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "marketing_base.html" %}
+
+{% block marketing_content %}
+<main class="home-main">
+  <section class="hero-section">
+    <div class="hero-copy">
+      <h1>Get more freedom in the markets.</h1>
+      <p>
+        Trade cryptocurrencies, stock indices, commodities, and forex from a
+        single account.
+      </p>
+      <div class="hero-actions">
+        <a class="hero-btn" href="{{ url_for('login') }}">Login Account</a>
+        <a class="hero-btn ghost" href="{{ url_for('register') }}">Open Account</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true"></div>
+  </section>
+
+  <section class="strip-section">
+    <h2>Less Commission</h2>
+    <div class="pill-grid">
+      <span>Forex</span>
+      <span>Crypto</span>
+      <span>Indexes</span>
+      <span>Stocks</span>
+      <span>Energy</span>
+      <span>Commodities</span>
+    </div>
+  </section>
+
+  <section class="cards-section">
+    <article class="home-card">
+      <h3>Learn</h3>
+      <p>Step-by-step tutorials, webinars, and dedicated account support.</p>
+      <a class="card-link" href="{{ url_for('register') }}">Open Account</a>
+    </article>
+    <article class="home-card">
+      <h3>Trade</h3>
+      <p>Tight spreads, fast execution, and practical tools for daily trading.</p>
+      <a class="card-link" href="{{ url_for('register') }}">Open Account</a>
+    </article>
+    <article class="home-card">
+      <h3>Invest</h3>
+      <p>Choose plans and signals, then fund through guided crypto checkout.</p>
+      <a class="card-link" href="{{ url_for('register') }}">Start Now</a>
+    </article>
+  </section>
+
+  <section class="steps-section">
+    <h2>Fast account opening in 3 simple steps</h2>
+    <div class="steps-grid">
+      <div>
+        <span class="step-number">1</span>
+        <h4>Register</h4>
+        <p>Submit your account details.</p>
+      </div>
+      <div>
+        <span class="step-number">2</span>
+        <h4>Fund</h4>
+        <p>Choose crypto method and continue to payment.</p>
+      </div>
+      <div>
+        <span class="step-number">3</span>
+        <h4>Trade</h4>
+        <p>Use your account dashboard and services.</p>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

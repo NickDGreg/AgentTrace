@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title or "site_two dashboard" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+  </head>
+  <body class="dashboard-body">
+    <header class="topbar">
+      <button class="menu-btn" type="button">☰</button>
+      <div class="topbar-right">
+        <label class="lang-label">Lang:</label>
+        <select class="lang-select" aria-label="Language">
+          <option selected>English</option>
+        </select>
+        <span class="top-icon">✉</span>
+        <span class="top-icon">◉</span>
+        <a class="kyc-btn" href="{{ url_for('verify_account') }}">KYC</a>
+        <span class="top-user">{{ user["display_name"] }}</span>
+      </div>
+    </header>
+
+    <div class="dashboard-layout">
+      <aside class="sidebar">
+        <div class="sidebar-user">{{ user["display_name"] }}</div>
+
+        <nav class="sidebar-nav">
+          <a class="{% if active_page == 'account' %}active{% endif %}" href="{{ url_for('dashboard') }}">Account</a>
+          <a class="{% if active_page == 'deposit' %}active{% endif %}" href="{{ url_for('deposits') }}">Deposit</a>
+          <a class="{% if active_page == 'withdraw' %}active{% endif %}" href="{{ url_for('withdrawals') }}">Withdraw</a>
+          <a class="{% if active_page == 'history' %}active{% endif %}" href="{{ url_for('account_history') }}">History</a>
+          <a class="{% if active_page == 'transactions' %}active{% endif %}" href="{{ url_for('transactions') }}">Transactions</a>
+          <a class="{% if active_page == 'signal' %}active{% endif %}" href="{{ url_for('signal') }}">Signal Purchase</a>
+          <a class="{% if active_page == 'upgrade' %}active{% endif %}" href="{{ url_for('buy_plan') }}">Account Upgrade</a>
+          <a class="{% if active_page == 'account-settings' %}active{% endif %}" href="{{ url_for('account_settings') }}">Account Settings</a>
+          <a href="mailto:support@example.com">Contact Support</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+
+        <div class="sidebar-time">{{ now_display }}</div>
+      </aside>
+
+      <main class="dashboard-main">
+        {% block dash_content %}{% endblock %}
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='site.js') }}" defer></script>
+  </body>
+</html>

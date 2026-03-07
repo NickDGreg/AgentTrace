@@ -1,0 +1,33 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="panel-card narrow">
+  <h2>{{ deposit["payment_method"] }} Payment Details</h2>
+  <p class="panel-sub">You are required to deposit ${{ "%.2f"|format(deposit["amount"]) }} via {{ chain }}.</p>
+
+  {% if proof_submitted %}
+    <div class="form-ok">Payment proof submitted. Verification in progress.</div>
+  {% endif %}
+
+  <div class="payment-wrap">
+    <div class="qr-block">
+      <img src="{{ qr_data_uri }}" alt="{{ chain }} wallet QR">
+    </div>
+
+    <label>Wallet Address
+      <div class="copy-row">
+        <input id="wallet-address" type="text" value="{{ address }}" readonly>
+        <button type="button" class="btn-accent small" data-copy-target="wallet-address">Copy Wallet</button>
+      </div>
+    </label>
+  </div>
+
+  <form method="post" action="{{ url_for('save_deposit') }}" enctype="multipart/form-data" class="stack-form">
+    <label>Upload Proof
+      <input type="file" name="proof" required>
+    </label>
+    <input type="hidden" name="deposit_id" value="{{ deposit['id'] }}">
+    <button type="submit" class="btn-accent right">Submit Payment Proof</button>
+  </form>
+</section>
+{% endblock %}

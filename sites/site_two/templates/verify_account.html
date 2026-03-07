@@ -1,0 +1,35 @@
+{% extends "dashboard_base.html" %}
+
+{% block dash_content %}
+<section class="panel-card">
+  <h2>KYC Verification</h2>
+  <p class="panel-sub">Complete identity checks to unlock full account limits.</p>
+
+  {% if submitted %}
+    <div class="form-ok">KYC documents submitted. Compliance review is now in progress.</div>
+  {% endif %}
+
+  <div class="status-row">
+    <span class="status-pill hold">Current Status: Unverified</span>
+    <span class="status-pill review">Review SLA: up to 24 hours</span>
+  </div>
+
+  <form method="post" action="{{ url_for('verify_account') }}" class="stack-form">
+    <label>ID Type
+      <select name="id_type" required>
+        <option selected disabled value="">--Select ID Type--</option>
+        <option>Passport</option>
+        <option>Driver License</option>
+        <option>National ID</option>
+      </select>
+    </label>
+    <label>Document Number
+      <input type="text" name="document_number" required>
+    </label>
+    <label>Issued Country
+      <input type="text" name="issued_country" required>
+    </label>
+    <button type="submit" class="btn-accent right">Submit KYC</button>
+  </form>
+</section>
+{% endblock %}
