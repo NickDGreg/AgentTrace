@@ -1,0 +1,10 @@
+services:
+  site_three:
+    build:
+      context: .
+    environment:
+      AGENTTRACE_EXTERNAL_URL: http://localhost:18085/login
+    ports:
+      - "18085:8000"
+    volumes:
+      - ./data:/app/data

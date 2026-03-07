@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+  </head>
+  <body class="auth-body">
+    <div class="auth-shell">
+      <div class="auth-visual">
+        <a class="brand" href="{{ url_for('index') }}">
+          <span class="brand-main">TITAN TRADE</span>
+          <span class="brand-sub">GLOBAL LTD</span>
+        </a>
+        <h1>Create your account</h1>
+        <p>Complete onboarding to unlock dashboard and funding options.</p>
+      </div>
+
+      <div class="auth-panel">
+        <h2>Register</h2>
+        <p class="auth-subline">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+
+        {% if error %}
+          <div class="form-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{{ url_for('register') }}" class="auth-form" id="register-form">
+          <label>First name
+            <input type="text" name="display_name" required value="{{ form.get('display_name', '') }}">
+          </label>
+          <label>Email
+            <input type="email" name="email" required value="{{ form.get('email', '') }}">
+          </label>
+          <label>Country
+            <input type="text" name="country" required value="{{ form.get('country', '') }}">
+          </label>
+          <label>Phone
+            <input type="text" name="phone" required value="{{ form.get('phone', '') }}">
+          </label>
+          <label>Password
+            <input type="password" name="password" id="password" required>
+          </label>
+          <label>Confirm password
+            <input type="password" name="password_confirm" id="password_confirm" required>
+          </label>
+          <div id="password-match-message" class="form-hint"></div>
+          <button type="submit">Create account</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

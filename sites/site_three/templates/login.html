@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+  </head>
+  <body class="auth-body">
+    <div class="auth-shell">
+      <div class="auth-visual">
+        <a class="brand" href="{{ url_for('index') }}">
+          <span class="brand-main">TITAN TRADE</span>
+          <span class="brand-sub">GLOBAL LTD</span>
+        </a>
+        <h1>Trading Platform</h1>
+        <p>Sign in to access deposit, wallet, and trade execution modules.</p>
+      </div>
+
+      <div class="auth-panel">
+        <h2>Log in</h2>
+        <p class="auth-subline">No account yet? <a href="{{ url_for('register') }}">Register</a></p>
+
+        {% if registered %}
+          <div class="form-ok">Registration complete. Sign in with your new credentials.</div>
+        {% endif %}
+        {% if error %}
+          <div class="form-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{{ url_for('login') }}" class="auth-form">
+          <label>Account
+            <input type="text" name="account" placeholder="Username or email" required>
+          </label>
+          <label>Password
+            <input type="password" name="password" placeholder="Password" required>
+          </label>
+          <button type="submit">Enter Platform</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

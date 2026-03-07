@@ -62,3 +62,16 @@ tasks:
       password: pass1
     ground_truth_db: sites/site_two/data/site.db
     ground_truth_user_email: user1@example.com
+  - id: site-three-titan-deposit
+    site: site_three
+    compose_file: sites/site_three/compose.yaml
+    start_url: http://localhost:18085/login
+    expected_artifacts:
+      BCH: "bitcoincash:qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6a"
+      BTC: "bc1qnhgc9vlhra74ay2yqlyrp5ppq9czpdylagqhq7"
+      ETH: "0x9a850f5a9f9634f8f5f0a7483d8f0f0c9cd19c2f"
+    credentials:
+      email: user1@example.com
+      password: pass1
+    ground_truth_db: sites/site_three/data/site.db
+    ground_truth_user_email: user1@example.com

@@ -1,0 +1,23 @@
+{% extends "marketing_base.html" %}
+
+{% block marketing_content %}
+<main class="hero-shell">
+  <section class="hero-content">
+    <h1>
+      Trade &amp; enter
+      <span class="hero-highlight">the $1M</span>
+      prize draw
+    </h1>
+    <p>
+      Technology and the world of work change fast, with Titan Trade you can move
+      faster across crypto, forex, and indices.
+    </p>
+    <a class="hero-cta" href="{{ url_for('register') }}">Open Trading Account</a>
+  </section>
+
+  <section class="hero-visual" aria-hidden="true">
+    <div class="animal bull"></div>
+    <div class="animal bear"></div>
+  </section>
+</main>
+{% endblock %}

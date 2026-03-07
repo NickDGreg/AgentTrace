@@ -1,0 +1,35 @@
+{% extends "marketing_base.html" %}
+
+{% block marketing_content %}
+<main class="info-shell">
+  <section class="info-card">
+    <h1>{{ page_title }}</h1>
+    <p class="info-intro">{{ page_intro }}</p>
+
+    <ul class="info-list">
+      {% for item in bullets %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+
+    {% if submitted %}
+      <div class="info-success">Message submitted. Support will contact you shortly.</div>
+    {% endif %}
+
+    {% if page_title == "Contact us" %}
+      <form method="post" action="{{ url_for('contact_us') }}" class="contact-form">
+        <label>Name
+          <input type="text" name="name" required>
+        </label>
+        <label>Email
+          <input type="email" name="email" required>
+        </label>
+        <label>Message
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <button type="submit">Send Message</button>
+      </form>
+    {% endif %}
+  </section>
+</main>
+{% endblock %}
