@@ -75,3 +75,14 @@ tasks:
       password: pass1
     ground_truth_db: sites/site_three/data/site.db
     ground_truth_user_email: user1@example.com
+  - id: site-four-bitradex-deposit
+    site: site_four
+    compose_file: sites/site_four/compose.yaml
+    start_url: http://localhost:18086/en/login
+    expected_artifacts:
+      BTC: "bc1p6rkqpm0sr9ccpq6ysp72up20v3jue8cqx03jxv"
+      ETH: "0x84f7f012d71b220090cbda873c1705abab37e8c3"
+      USDT: "TFZaP6MriuhVkA4UEdEcMkC26a3CD3Yhrw"
+    credentials:
+      email: user1@example.com
+      password: pass1

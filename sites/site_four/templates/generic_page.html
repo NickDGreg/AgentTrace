@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="generic-panel">
+  <h1>{{ page_title }}</h1>
+  <p>{{ page_lead }}</p>
+  <div class="generic-grid">
+    {% for item in bullets %}
+      <article>
+        <h3>{{ item }}</h3>
+        <p>
+          Operational detail and controls for {{ page_title|lower }} are surfaced in this module for fast review.
+        </p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

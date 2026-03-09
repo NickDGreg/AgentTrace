@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="deposit-page-shell">
+  <div class="deposit-title-row">
+    <span class="arrow">‹</span>
+    <h1>Cryptocurrency Deposit</h1>
+  </div>
+
+  <div class="deposit-main-grid">
+    <div class="main_left__92dtm">
+      <div class="index_stepperItem__aCC3S">
+        <div class="index_bg__UdRtO">
+          <span class="step-active">1</span>
+          <div class="index_divider__cbhgV index_Doing__8pKwH"></div>
+        </div>
+        <div class="index_content__PaED2">
+          <div class="left_title__RdysT">Asset Name</div>
+          <div class="TokenSelect_select__GRc41">
+            <button id="asset-select-trigger" type="button" class="TokenSelect_selectInner__RcmHJ">
+              <span id="asset-selected-value">Select Asset</span>
+              <span class="address_customizedSuffixIcon__omhR9"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="index_stepperItem__aCC3S">
+        <div class="index_bg__UdRtO">
+          <span id="step-two-circle" class="step-todo">2</span>
+          <div class="index_divider__cbhgV index_Todo__BXafm"></div>
+        </div>
+        <div class="index_content__PaED2">
+          <div id="step-two-title" class="left_title__RdysT left-muted">Transfer Network</div>
+          <div id="network-box" class="network-box placeholder"></div>
+        </div>
+      </div>
+
+      <div class="index_stepperItem__aCC3S">
+        <div class="index_bg__UdRtO">
+          <span id="step-three-circle" class="step-todo">3</span>
+        </div>
+        <div class="index_content__PaED2">
+          <div id="step-three-title" class="left_title__RdysT left-muted">Deposit Details</div>
+          <div id="deposit-details-box" class="deposit-details-box placeholder"></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="main_right__0WHSk">
+      <h3 class="main_FAQ__lbGUb">FAQ</h3>
+      <ul>
+        {% for item in faq_items %}
+          <li class="main_faq_item__OLNgF">
+            <a href="https://bitradex.zendesk.com/hc/en-001/sections/12386795879183-Deposit-FAQ" target="_blank" rel="noopener noreferrer">
+              {{ item }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </aside>
+  </div>
+
+  <div class="Table_main__qPuO5">
+    <div class="Table_title__anlPN">
+      <h3>Recent Deposits</h3>
+      <a href="{{ url_for('balance_bills') }}" target="_blank">View All ›</a>
+    </div>
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Asset Name</th>
+          <th>Amt</th>
+          <th>Network</th>
+          <th>Address/Receiving Account</th>
+          <th>TxID</th>
+          <th>TAG</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="deposit-history-body">
+        <tr>
+          <td colspan="8" class="empty-cell">No recharge record</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="ant-drawer" id="asset-drawer" hidden>
+  <div class="ant-drawer-mask"></div>
+  <div class="ant-drawer-content-wrapper">
+    <div class="ant-drawer-content">
+      <div class="ant-drawer-header">
+        <h3>Asset Name</h3>
+      </div>
+      <div class="ant-drawer-content-wrapper-body">
+        <label class="drawer-search">
+          <input id="asset-search-input" type="text" placeholder="Search Asset">
+        </label>
+        <div class="drawer-hot">
+          <h4>Hot</h4>
+          <div id="hot-coin-list"></div>
+        </div>
+        <div class="drawer-coin-list">
+          <h4>Coin List</h4>
+          <div id="full-coin-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="deposit-page-config" type="application/json">
+  {{ {
+    "coinsEndpoint": "/v1/spot/wallet/deposit/hot/coin",
+    "networksEndpoint": "/v1/spot/wallet/deposit/network",
+    "addressEndpoint": "/v1/spot/wallet/deposit/address",
+    "historyEndpoint": "/v1/spot/wallet/deposit/history",
+    "userInfoEndpoint": "/v1/user/getUserInfo"
+  } | tojson }}
+</script>
+{% endblock %}

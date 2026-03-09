@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    >
+    <title>{{ title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+  </head>
+  <body data-theme="dark">
+    <div id="__next">
+      <header class="site-header">
+        <a class="brand-logo" href="{{ url_for('home') }}">
+          <span class="brand-mark">◈</span>
+          <span class="brand-text">BitradeX</span>
+        </a>
+
+        <nav class="main-nav">
+          <a href="{{ url_for('aibot') }}">AiBot</a>
+          <a href="{{ url_for('markets') }}">Markets</a>
+          <a href="{{ url_for('futures') }}">Futures</a>
+          <a href="{{ url_for('trade') }}">Trade</a>
+          <a href="{{ url_for('invite_friend') }}">Invite Friend</a>
+          <a href="{{ url_for('about') }}">About Us</a>
+        </nav>
+
+        <div class="header-search">
+          <input type="text" placeholder="Search">
+        </div>
+
+        <div class="header-right">
+          {% if user %}
+            <div class="assets-menu">
+              <button type="button" class="assets-btn" id="assets-menu-btn">Assets ▾</button>
+              <div class="assets-dropdown" id="assets-dropdown">
+                <a href="{{ url_for('balance_overview') }}">Overview</a>
+                <a href="{{ url_for('spot_account') }}">Spot Account</a>
+                <a href="{{ url_for('futures') }}">Futures Account</a>
+                <a href="{{ url_for('aibot') }}">AI Account</a>
+                <a href="{{ url_for('balance_bills') }}">Fund Flow</a>
+              </div>
+            </div>
+            <a href="{{ url_for('trade') }}">Orders ▾</a>
+            <span class="icon-dot" title="wallet"></span>
+            <span class="icon-dot" title="messages"></span>
+            <span class="icon-dot" title="notifications">68</span>
+            <a href="{{ url_for('logout') }}" class="logout-link">⎋</a>
+          {% else %}
+            <a href="{{ url_for('login') }}">Log in</a>
+            <a href="{{ url_for('register') }}">Register</a>
+          {% endif %}
+        </div>
+      </header>
+
+      <main class="page-main">{% block content %}{% endblock %}</main>
+    </div>
+
+    <script src="{{ url_for('static', filename='site.js') }}" defer></script>
+  </body>
+</html>

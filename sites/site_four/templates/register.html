@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% set form = form or {} %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Create account</h1>
+  <p>Register to access deposit, wallet, and order routes.</p>
+
+  {% if error %}
+    <div class="form-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('register') }}" class="auth-form">
+    <label>Display name
+      <input type="text" name="display_name" value="{{ form.get('display_name', '') }}" required>
+    </label>
+    <label>Email
+      <input type="email" name="email" value="{{ form.get('email', '') }}" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" id="password" required>
+    </label>
+    <label>Confirm password
+      <input type="password" name="password_confirm" id="password_confirm" required>
+    </label>
+    <div id="password-match-message" class="form-hint"></div>
+    <button type="submit">Register</button>
+  </form>
+</section>
+{% endblock %}

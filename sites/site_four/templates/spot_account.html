@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="generic-panel spot-account-panel">
+  <h1>Spot Account</h1>
+  <p>Manage your spot wallet balances, transfers, and account actions.</p>
+
+  <div class="spot-account-grid">
+    <article>
+      <h3>Total Spot Balance</h3>
+      <strong>$0.00</strong>
+      <span>Converted in USD</span>
+    </article>
+    <article>
+      <h3>Available Assets</h3>
+      <strong>0</strong>
+      <span>Tradable currencies</span>
+    </article>
+    <article>
+      <h3>Frozen Assets</h3>
+      <strong>$0.00</strong>
+      <span>In open orders</span>
+    </article>
+  </div>
+
+  <div class="spot-actions">
+    <a class="cta-btn" href="{{ url_for('deposit_page') }}">Deposit</a>
+    <a class="ghost-btn" href="{{ url_for('withdraw_page') }}">Withdraw</a>
+  </div>
+
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th>Asset</th>
+        <th>Available</th>
+        <th>Frozen</th>
+        <th>BTC Value</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="5" class="empty-cell">No asset records</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+{% endblock %}

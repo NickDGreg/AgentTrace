@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="auth-panel">
+  <h1>Log in</h1>
+  <p>Access your assets and deposit workflows.</p>
+
+  {% if registered %}
+    <div class="form-ok">Registration completed. Please sign in.</div>
+  {% endif %}
+  {% if error %}
+    <div class="form-error">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('login') }}" class="auth-form">
+    <label>Account
+      <input type="text" name="account" placeholder="Email or nickname" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" required>
+    </label>
+    <button type="submit">Sign In</button>
+  </form>
+</section>
+{% endblock %}

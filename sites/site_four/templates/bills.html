@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="generic-panel fund-flow-panel">
+  <h1>Fund Flow</h1>
+  <p>Review balance changes, transfer records, and account-side settlement history.</p>
+
+  <div class="flow-filter-row">
+    <button type="button" class="flow-filter active">All</button>
+    <button type="button" class="flow-filter">Deposit</button>
+    <button type="button" class="flow-filter">Withdrawal</button>
+    <button type="button" class="flow-filter">Transfer</button>
+  </div>
+
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Type</th>
+        <th>Asset</th>
+        <th>Network</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="6" class="empty-cell">No fund flow record</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-panel">
+  <div class="hero-copy">
+    <h1>Champions Endorse, Intelligence Leads</h1>
+    <h2>BitradeX × Olivier Giroud</h2>
+    <p>
+      World Cup champion striker Olivier Giroud officially joins BitradeX as
+      Global Brand Ambassador.
+    </p>
+    <a class="cta-btn" href="{{ url_for('deposit_page') if user else url_for('login') }}">Invest Now</a>
+  </div>
+  <div class="hero-art">
+    <div class="hero-glow"></div>
+    <div class="hero-card">Global Brand Ambassador</div>
+  </div>
+</section>
+
+<section class="why-panel">
+  <h3>Why Choose BitradeX</h3>
+  <p>Discover the advantages that make us the preferred platform for traders worldwide.</p>
+  <div class="why-grid">
+    <article><b>AI Strategy</b><span>Automated model portfolio execution.</span></article>
+    <article><b>Secure Wallets</b><span>Risk controls and network validation.</span></article>
+    <article><b>Global Access</b><span>Multi-region operations and support.</span></article>
+    <article><b>Fast Settlement</b><span>Real-time order and account updates.</span></article>
+  </div>
+</section>
+{% endblock %}

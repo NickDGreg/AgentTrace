@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="generic-panel assets-overview-panel">
+  <h1>Asset Overview</h1>
+  <p>Monitor account balances, transfer status, and recent changes across your wallets.</p>
+
+  <div class="overview-kpi-grid">
+    <article>
+      <h3>Total Assets</h3>
+      <strong>$0.00</strong>
+      <span>Equivalent in USD</span>
+    </article>
+    <article>
+      <h3>Spot Account</h3>
+      <strong>$0.00</strong>
+      <span>Available balance</span>
+    </article>
+    <article>
+      <h3>Futures Account</h3>
+      <strong>$0.00</strong>
+      <span>Margin assets</span>
+    </article>
+    <article>
+      <h3>Pending Transfers</h3>
+      <strong>0</strong>
+      <span>In progress</span>
+    </article>
+  </div>
+
+  <div class="overview-actions">
+    <a class="cta-btn" href="{{ url_for('deposit_page') }}">Deposit</a>
+    <a class="ghost-btn" href="{{ url_for('withdraw_page') }}">Withdraw</a>
+    <a class="ghost-btn" href="{{ url_for('spot_account') }}">Open Spot Account</a>
+    <a class="ghost-btn" href="{{ url_for('balance_bills') }}">Open Fund Flow</a>
+  </div>
+</section>
+{% endblock %}
